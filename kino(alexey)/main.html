@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кинотека фантастических фильмов</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FFDEAD;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        header {
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0;
+        }
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .movie-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .movie-card:hover {
+            transform: translateY(-5px);
+        }
+        .movie-poster {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+        .movie-title {
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            
+        }
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .modal-content {
+            background-color: #FFDEAD;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+        .modal-poster {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+        .movie-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .movie-rating {
+            background-color: #ffc107;
+            color: #333;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .movie-plot {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .reviews {
+            margin-top: 20px;
+            border-top: 1px dashed #ddd;
+            padding-top: 15px;
+        }
+        .review {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .review-rating {
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        .review-author {
+            font-style: italic;
+            color: #666;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Кинотека фантастических фильмов</h1>
+        <p>Кликните на постер для подробностей</p>
+    </header>
+
+    <div class="movies-grid">
+        <!-- Фильм 1 -->
+        <div class="movie-card" onclick="openModal('modal1')">
+            <img src="pictures/pic1.jpg" alt="Последний код" class="movie-poster">
+            <div class="movie-title">Последний код (2023)</div>
+        </div>
+
+        <!-- Фильм 2 -->
+        <div class="movie-card" onclick="openModal('modal2')">
+            <img src="pictures/pic2.jpg" alt="Ледяной шёпот" class="movie-poster">
+            <div class="movie-title">Ледяной шёпот (2021)</div>
+        </div>
+
+        <!-- Фильм 3 -->
+        <div class="movie-card" onclick="openModal('modal3')">
+            <img src="pictures/pic3.jpg" alt="Неоновый демон" class="movie-poster">
+            <div class="movie-title">Неоновый демон (1989)</div>
+        </div>
+
+        <!-- Фильм 4 -->
+        <div class="movie-card" onclick="openModal('modal4')">
+            <img src="pictures/pic4.jpg" alt="Космический ковчег" class="movie-poster">
+            <div class="movie-title">Космический ковчег (2024)</div>
+        </div>
+
+        <!-- Фильм 5 -->
+        <div class="movie-card" onclick="openModal('modal5')">
+            <img src="pictures/pic5.jpg" alt="Тени Безумного Короля" class="movie-poster">
+            <div class="movie-title">Тени Безумного Короля (1997)</div>
+        </div>
+
+        <!-- Фильм 6 -->
+        <div class="movie-card" onclick="openModal('modal6')">
+            <img src="pictures/pic6.jpg" alt="Хрустальные сны" class="movie-poster">
+            <div class="movie-title">Хрустальные сны (2018)</div>
+        </div>
+
+        <!-- Фильм 7 -->
+        <div class="movie-card" onclick="openModal('modal7')">
+            <img src="pictures/pic7.jpg" alt="Песок времени" class="movie-poster">
+            <div class="movie-title">Песок времени (1995)</div>
+        </div>
+
+        <!-- Фильм 8 -->
+        <div class="movie-card" onclick="openModal('modal8')">
+            <img src="pictures/pic8.jpg" alt="Небесный город" class="movie-poster">
+            <div class="movie-title">Небесный город (2015)</div>
+        </div>
+
+        <!-- Фильм 9 -->
+        <div class="movie-card" onclick="openModal('modal9')">
+            <img src="pictures/pic9.jpg" alt="Машина воспоминаний" class="movie-poster">
+            <div class="movie-title">Машина воспоминаний (2019)</div>
+        </div>
+
+        <!-- Фильм 10 -->
+        <div class="movie-card" onclick="openModal('modal10')">
+            <img src="pictures/pic10.jpg" alt="Темный феникс" class="movie-poster">
+            <div class="movie-title">Темный феникс (2025)</div>
+        </div>
+
+
+    </div>
+    <!-- Модальные окна -->
+    <!-- Фильм 1 -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal1')">&times;</span>
+            <img src="pictures/pic1.2.jpg" alt="Последний код" class="modal-poster">
+            <h2>Последний код (2023)</h2>
+            <div class="movie-meta">
+                <span>Киберпанк, Триллер</span>
+                <span class="movie-rating">8.7/10</span>
+                <span>2ч 18м</span>
+            </div>
+            <p class="movie-plot">
+                В 2145 году хакер-одиночка Кайо обнаруживает тайный код, способный отключить глобальную нейросеть, контролирующую человечество. Преследуемый корпоративными убийцами и ИИ-полицией, он должен решить: уничтожить систему или использовать её для перезагрузки цивилизации.
+            </p>
+            <div class="reviews">
+                <h3>Отзывы:</h3>
+                <div class="review">
+                    <p>«Это шедевр! Визуал на уровне «Бегущего по лезвию», но с современной философской глубиной. Каждый кадр — арт.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Кинокритик «HyperFuture»</p>
+                </div>
+                <div class="review">
+                    <p>«Сюжет немного предсказуем, но атмосфера и актёрская игра главного героя компенсируют всё.»</p>
+                    <p class="review-author"><span class="review-rating">4/5</span> — Зрительский блог «NeonPulse»</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм переопределил киберпанк. Сцена с взломом нейросети через аналоговый модем — гениальная метафора!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Журнал «Neon Grid»</p>
+                </div>
+                <div class="review">
+                    <p>«ГГ слишком пафосный, но мир прописан идеально. Хочу жить в этом дистопичном будущем!»</p>
+                    <p class="review-author"><span class="review-rating">4/5</span> — Блогер @CyberDystopia</p>
+                </div>
+                <div class="review">
+                    <p>«Лучший технотриллер после «Матрицы». Особенно впечатлили камерные диалоги с ИИ-полицейским.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Критик «Wired»</p>
+                </div>
+                <div class="review">
+                    <p>«Первые 40 минут — шедевр, потом сюжет теряет фокус. Но визуал компенсирует всё!»</p>
+                    <p class="review-author"><span class="review-rating">4/5</span> — Редактор «Sci-Fi Now»</p>
+                </div>
+                <div class="review">
+                    <p>«Слишком много клише из аниме «Призрак в доспехах». Ожидал больше оригинальности.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Зритель на Kinopoisk</p>
+                </div>
+                <div class="review">
+                    <p>«Саундтрек — электронная симфония! Особенно трек во время погони по виртуальному Токио.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Музыкальный обозреватель</p>
+                </div>
+                <div class="review">
+                    <p>«Философские вопросы подняты, но не раскрыты. Ощущение, что режиссёр боялся углубляться.»</p>
+                    <p class="review-author"><span class="review-rating">3.5/5</span> — Философский журнал</p>
+                </div>
+                <div class="review">
+                    <p>«Костюмы и дизайн гаджетов — отдельный вид искусства. Этот фильм задаст тренды на десятилетие!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Дизайнер FutureTech</p>
+                </div>
+                <div class="review">
+                    <p>«Слишком много «крутизны» и мало человечности. Герои эмоционально плоские.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Киноклуб «Глубина»</p>
+                </div>
+                <div class="review">
+                    <p>«Финал перевернул все мои ожидания! Не видел такого смелого решения со времён «Начала».»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Режиссёр VR-фильмов</p>
+                </div>
+                <div class="review">
+                    <p>«Диалоги звучат как цитаты из Википедии. Актерам явно не хватало живых эмоций.»</p>
+                    <p class="review-author"><span class="review-rating">2.5/5</span> — Театральный критик</p>
+                </div>
+                <div class="review">
+                    <p>«Дождь из цифровых символов в кульминации — самый красивый кадр в истории киберпанка!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Оператор-постановщик</p>
+                </div>
+                <div class="review">
+                    <p>«Спецэффекты на 10/10, но сюжетные дыры размером с червоточину. Почему никто не охранял главный сервер?»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — IT-специалист</p>
+                </div>
+                <div class="review">
+                    <p>«Это не просто фильм — это предупреждение. После просмотра выбросил все умные колонки из дома.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Активист Digital Rights</p>
+                </div>
+                <div class="review">
+                    <p>«Бои на световых мечах выглядят устаревше после «Дюны». Нужно было придумать что-то новое.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Каскадёр</p>
+                </div>
+                <div class="review">
+                    <p>«Сцена в подпольном баре с роботами-джазменами должна войти в учебники по мировому кино!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Историк кино</p>
+                </div>
+                <div class="review">
+                    <p>«Главный злой ИИ ведёт себя как капризный подросток. Разочарован уровнем проработки антагониста.»</p>
+                    <p class="review-author"><span class="review-rating">2/5</span> — Психолог AI</p>
+                </div>
+                <div class="review">
+                    <p>«После просмотра три дня видел QR-коды вместо звёзд. Вот что значит настоящее погружение!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — VR-энтузиаст</p>
+                </div>
+                <div class="review">
+                    <p>«Сравнивают с «Бегущим по лезвию», но здесь нет и десятой доли его глубины. Просто красивый экшен.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Киноман-ретроград</p>
+                </div>
+                <div class="review">
+                    <p>«Первые 10 минут — самый точный прогноз нашего технологического будущего. Жутко и восхитительно!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Футуролог</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фильм 2 -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal2')">&times;</span>
+            <img src="pictures/pic2.2.jpg" alt="Ледяной шёпот" class="modal-poster">
+            <h2>Ледяной шёпот (2021)</h2>
+            <div class="movie-meta">
+                <span>Фэнтези, Драма</span>
+                <span class="movie-rating">7.9/10</span>
+                <span>1ч 52м</span>
+            </div>
+            <p class="movie-plot">
+                В мире, где зима длится 300 лет, юная Эйра обнаруживает, что может понимать язык древних ледяных духов. Когда её деревню поражает таинственная болезнь, она отправляется в запретные ледниковые пещеры, чтобы найти источник магии.
+            </p>
+            <div class="reviews">
+                <h3>Отзывы:</h3>
+                <div class="review">
+                    <p>«Волшебно и меланхолично. Как будто попал в северную легенду! Особенно впечатлили сцены с духами в пещерах.»</p>
+                    <p class="review-author"><span class="review-rating">4.5/5</span> — Читатель «MythoMag»</p>
+                </div>
+                <div class="review">
+                    <p>«Красиво, но слишком медленно. Первый час можно было сократить вдвое.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Зритель на «Кинопоиске»</p>
+                </div>
+                <div class="review">
+                    <p>«Сказочная атмосфера! Как будто попал в древнюю норвежскую сагу с современным визуалом.»</p>
+                    <p class="review-author"><span class="review-rating">4.5/5</span> — Журнал «Nordic Myths»</p>
+                </div>
+                <div class="review">
+                    <p>«Главная героиня слишком пассивна первые полчаса, но потом раскрывается удивительно.»</p>
+                    <p class="review-author"><span class="review-rating">4/5</span> — Киноблогер</p>
+                </div>
+                <div class="review">
+                    <p>«Ледяные духи выглядят потрясающе! Особенно королева в платье из сосулек.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Художник по костюмам</p>
+                </div>
+                <div class="review">
+                    <p>«Слишком много намёков и мало ответов. Финал оставляет больше вопросов, чем должно.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Зритель на IMDb</p>
+                </div>
+                <div class="review">
+                    <p>«Музыка переносит прямо в сердце ледника! Лучший саундтрек года в жанре фэнтези.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Музыкальный критик</p>
+                </div>
+                <div class="review">
+                    <p>«Диалоги с духами звучат как дешёвая поэзия. Можно было сделать более естественно.»</p>
+                    <p class="review-author"><span class="review-rating">2.5/5</span> — Литературный обозреватель</p>
+                </div>
+                <div class="review">
+                    <p>«Сцена с ледяным мостом через пропасть — самый напряжённый момент в кино в этом году!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Каскадёр</p>
+                </div>
+                <div class="review">
+                    <p>«Ожидал больше магии и меньше драмы. Не совсем то, что обещал трейлер.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Фанат фэнтези</p>
+                </div>
+                <div class="review">
+                    <p>«Операторская работа на высоте! Каждый кадр можно повесить в рамку как произведение искусства.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Фотограф</p>
+                </div>
+                <div class="review">
+                    <p>«Главный злой слишком шаблонный. Не хватало глубины мотивации.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Сценарист</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фильм 3 -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal3')">&times;</span>
+            <img src="pictures/pic3.2.jpg" alt="Неоновый демон" class="modal-poster">
+            <h2>Неоновый демон (1989)</h2>
+            <div class="movie-meta">
+                <span>Ретрофутуризм, Экшен</span>
+                <span class="movie-rating">9.1/10</span>
+                <span>2ч 05м</span>
+            </div>
+            <p class="movie-plot">
+                Культовая классика! В альтернативных 1980-х детектив Джек Вольт расследует серию убийств в подпольных неоновых клубах Лос-Анджелеса, где жертвы превращаются в цифровые призраки.
+            </p>
+            <div class="reviews">
+                <h3>Отзывы:</h3>
+                <div class="review">
+                    <p>«Гениальный киберпанк до киберпанка! Смотрю каждый год и нахожу новые детали. Саундтрек — огонь!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Фанат ретрофутуризма</p>
+                </div>
+                <div class="review">
+                    <p>«Если бы «Бегущий по лезвию» и «Таксист» родили ребёнка в мире VHS — это был бы «Неоновый демон».»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Коллекционер винтажного кино</p>
+                </div>
+                <div class="review">
+                    <p>«Культовый статус оправдан на 200%! Этот фильм будет вдохновлять режиссёров ещё 50 лет.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Журнал «Retro Future»</p>
+                </div>
+                <div class="review">
+                    <p>«Детектив Вольт — новый культовый герой. Хочу сериал по его приключениям!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Фанат</p>
+                </div>
+                <div class="review">
+                    <p>«Сцена в ночном клубе с цифровыми призраками — это новый эталон визуальных эффектов.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — VFX-художник</p>
+                </div>
+                <div class="review">
+                    <p>«Слишком много стиля в ущерб сюжету. Второй акт особенно страдает от этого.»</p>
+                    <p class="review-author"><span class="review-rating">3.5/5</span> — Кинокритик</p>
+                </div>
+                <div class="review">
+                    <p>«Синтвейв-саундтрек идеально сочетается с визуалом. Купил винил сразу после просмотра!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Меломан</p>
+                </div>
+                <div class="review">
+                    <p>«Ретрофутуризм в его лучшем проявлении! Каждый кадр пропитан атмосферой альтернативных 80-х.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Куратор ретро-кино</p>
+                </div>
+                <div class="review">
+                    <p>«Детектив Вольт — это новый Рик Декард! Актерская игра на высшем уровне.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Фанат нуара</p>
+                </div>
+                <div class="review">
+                    <p>«Сцена с цифровым призраком в зеркале лифта до сих пор снится мне по ночам. Гениально!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Критик ужасов</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм слишком зациклен на стиле. Сюжет мог бы быть более проработанным.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Сценарист</p>
+                </div>
+                <div class="review">
+                    <p>«Аналоговые спецэффекты выглядят свежее большинства современных CGI. Это магия кинематографа!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Режиссер</p>
+                </div>
+                <div class="review">
+                    <p>«Философские вопросы подняты, но не раскрыты до конца. Ощущение незавершенности.»</p>
+                    <p class="review-author"><span class="review-rating">4/5</span> — Философский журнал</p>
+                </div>
+                <div class="review">
+                    <p>«Костюмы и грим — отдельный шедевр! Особенно образы клубных завсегдатаев.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Стилист</p>
+                </div>
+                <div class="review">
+                    <p>«Слишком много отсылок к классике жанра. Хотелось больше оригинальности.»</p>
+                    <p class="review-author"><span class="review-rating">3.5/5</span> — Киноман</p>
+                </div>
+                <div class="review">
+                    <p>«Саундтрек — это отдельный персонаж фильма! Синтвейв никогда не звучал так мощно.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Музыкальный продюсер</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм пытается быть умнее, чем есть на самом деле. Много пафоса, мало содержания.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Кинокритик</p>
+                </div>
+                <div class="review">
+                    <p>«Сцена в неоновом бассейне — самый эстетичный момент в кино этого десятилетия!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Видеоблогер</p>
+                </div>
+                <div class="review">
+                    <p>«Диалоги иногда звучат неестественно. Актерам явно не хватало лучшего материала.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Театральный режиссер</p>
+                </div>
+                <div class="review">
+                    <p>«Визуальные метафоры гениальны! Особенно сцена с разбитыми голограммами.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Художник</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм слишком растянут. Можно было сократить на 20 минут без потери смысла.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Редактор</p>
+                </div>
+                <div class="review">
+                    <p>«Это не просто фильм — это культурный феномен! Уже вижу его влияние в новой моде.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Культуролог</p>
+                </div>
+                <div class="review">
+                    <p>«Главный злой недостаточно убедителен. Не хватало глубины характера.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Психолог</p>
+                </div>
+                <div class="review">
+                    <p>«Сцена с танцем цифровых теней в финале — абсолютный шедевр визуального повествования!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Оператор</p>
+                </div>
+                <div class="review">
+                    <p>«Слишком много стилизации, слишком мало сердца. Красиво, но холодно.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Киноклуб</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм переопределил эстетику ретрофутуризма. Это новый эталон жанра!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Дизайнер</p>
+                </div>
+                <div class="review">
+                    <p>«Философская подоплека интересна, но подана слишком прямолинейно.»</p>
+                    <p class="review-author"><span class="review-rating">4/5</span> — Философ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фильм 4 -->
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal4')">&times;</span>
+            <img src="pictures/pic4.2.jpg" alt="Космический ковчег" class="modal-poster">
+            <h2>Космический ковчег (2024)</h2>
+            <div class="movie-meta">
+                <span>Научная фантастика</span>
+                <span class="movie-rating">8.3/10</span>
+                <span>2ч 41м</span>
+            </div>
+            <p class="movie-plot">
+                После гибели Земли последние 5000 человек летят к новой планете на гигантском корабле «Генезис». Но когда экипаж обнаруживает, что их маршрут ведёт в чёрную дыру, начинается бунт.
+            </p>
+            <div class="reviews">
+                <h3>Отзывы:</h3>
+                <div class="review">
+                    <p>«Как «Интерстеллар», но с более жёсткой научной базой. Сцена с гравитационным бунтом — лучшая в жанре за 20 лет!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Астрофизик К. Орлов</p>
+                </div>
+                <div class="review">
+                    <p>«Отличная идея, но треть фильма — это нудные диалоги о квантовой физике.»</p>
+                    <p class="review-author"><span class="review-rating">3.5/5</span> — Любитель экшена</p>
+                </div>
+                <div class="review">
+                    <p>«Самый научно достоверный космический фильм со времен "Интерстеллара"!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Астрофизик</p>
+                </div>
+                <div class="review">
+                    <p>«Сцена гравитационного бунта — технический шедевр! Как они это сняли?»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Кинотехник</p>
+                </div>
+                <div class="review">
+                    <p>«Персонажи слишком стереотипны. Ученый-герой, злой капитан... Хотелось больше глубины.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Литературный критик</p>
+                </div>
+                <div class="review">
+                    <p>«Дизайн корабля "Генезис" — это произведение искусства! Каждая деталь продумана.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Инженер NASA</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм слишком затянут. Можно было сократить все научные объяснения.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Обычный зритель</p>
+                </div>
+                <div class="review">
+                    <p>«Эффекты невесомости выглядят настолько реально, что забываешь, что это кино!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Космонавт</p>
+                </div>
+                <div class="review">
+                    <p>«Сюжетные повторы из "2001: Космическая одиссея". Не хватало оригинальности.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Киноман</p>
+                </div>
+                <div class="review">
+                    <p>«Музыка в сцене приближения к черной дыре — это космическая симфония!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Композитор</p>
+                </div>
+                <div class="review">
+                    <p>«Диалоги о квантовой физике слишком сложны для обычного зрителя.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Преподаватель</p>
+                </div>
+                <div class="review">
+                    <p>«Лучшее изображение черной дыры в истории кино! Научная консультация на высшем уровне.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Астроном</p>
+                </div>
+                <div class="review">
+                    <p>«Главная героиня слишком идеальна. Не хватало человеческих слабостей.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Психолог</p>
+                </div>
+                <div class="review">
+                    <p>«Сцена жертвоприношения ради миссии — одна из самых сильных в современном кино!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Кинокритик</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм пытается охватить слишком много тем сразу. Нужно было сосредоточиться.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Сценарист</p>
+                </div>
+                <div class="review">
+                    <p>«Операторская работа в сценах невесомости — это новый уровень кинематографа!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Оператор</p>
+                </div>
+                <div class="review">
+                    <p>«Финал слишком предсказуем. Ожидал большего от такого бюджета.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Блогер</p>
+                </div>
+                <div class="review">
+                    <p>«Лучший научно-фантастический фильм десятилетия! Баланс науки и драмы идеален.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Журнал Sci-Fi</p>
+                </div>
+                <div class="review">
+                    <p>«Слишком много технических деталей и мало человеческих эмоций.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Гуманитарий</p>
+                </div>
+                <div class="review">
+                    <p>«Дизайн инопланетного мира в финале — это шедевр концепт-арта!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Художник</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм мог бы быть короче. Некоторые сцены явно затянуты.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Редактор</p>
+                </div>
+                <div class="review">
+                    <p>«Это не просто кино — это учебник по научной фантастике!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Писатель-фантаст</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фильм 5 -->
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal5')">&times;</span>
+            <img src="pictures/pic5.2.jpg" alt="Тени Безумного Короля" class="modal-poster">
+            <h2>Тени Безумного Короля (1997)</h2>
+            <div class="movie-meta">
+                <span>Готический хоррор</span>
+                <span class="movie-rating">8.5/10</span>
+                <span>1ч 48м</span>
+            </div>
+            <p class="movie-plot">
+                В викторианской Англии проклятый художник получает заказ написать портрет таинственного графа Орлокского. В его поместье нет зеркал, а слуги шепчут о «других тенях».
+            </p>
+            <div class="reviews">
+                <h3>Отзывы:</h3>
+                <div class="review">
+                    <p>«Атмосфера настолько густая, что можно резать ножом. После просмотра я неделю спал со светом!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Фанат ужасов</p>
+                </div>
+                <div class="review">
+                    <p>«Слишком мрачно и депрессивно. Не понимаю восторгов — просто ещё один «Дракула» без крови.»</p>
+                    <p class="review-author"><span class="review-rating">2/5</span> — Зрительница «КиноMail»</p>
+                </div>
+                <div class="review">
+                    <p>«Атмосфера настолько густая, что после просмотра я неделю ходил ошарашенный.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Готический журнал</p>
+                </div>
+                <div class="review">
+                    <p>«Съёмка при свечах — гениальное решение! Такого реализма ещё не видел.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Оператор</p>
+                </div>
+                <div class="review">
+                    <p>«Сюжет слишком предсказуем для жанра. Знал развязку уже к середине фильма.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Фанат ужасов</p>
+                </div>
+                <div class="review">
+                    <p>«Граф Орлокский — один из самых харизматичных злодеев в истории кино!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Кинокритик</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм слишком медленный. Современному зрителю не хватает динамики.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Блогер</p>
+                </div>
+                <div class="review">
+                    <p>«Костюмы и декорации — это машина времени! Полное погружение в викторианскую эпоху.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Историк</p>
+                </div>
+                <div class="review">
+                    <p>«Звуковое оформление создает 90% атмосферы. Шорохи и шепоты сводят с ума!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Звукорежиссер</p>
+                </div>
+                <div class="review">
+                    <p>«Главный герой слишком пассивен. Хотелось больше борьбы с тенью.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Зритель</p>
+                </div>
+                <div class="review">
+                    <p>«Сцена с зеркалом в финале — это шедевр психологического ужаса!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Психолог</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм пытается быть умнее, чем есть. Много намёков, мало ответов.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Критик</p>
+                </div>
+                <div class="review">
+                    <p>«Грим теней — это революция в жанре! Никогда ещё тени не выглядели так реалистично.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Гример</p>
+                </div>
+                <div class="review">
+                    <p>«Слишком много отсылок к классике жанра. Хотелось больше оригинальности.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Киноман</p>
+                </div>
+                <div class="review">
+                    <p>«Музыкальное сопровождение идеально! Виолончельные партии леденят кровь.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Музыкант</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм мог бы быть страшнее. Ожидал больше прыжков от страха.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Любитель ужасов</p>
+                </div>
+                <div class="review">
+                    <p>«Это не просто фильм ужасов — это исследование природы безумия!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Психиатр</p>
+                </div>
+                <div class="review">
+                    <p>«Диалоги слишком витиеваты. Современному зрителю сложно следить.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Лингвист</p>
+                </div>
+                <div class="review">
+                    <p>«Сцена с горящими картинами — самый красивый момент в жанре ужасов за 20 лет!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Художник</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм слишком мрачный. После просмотра нужно смотреть комедии неделю.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Зритель</p>
+                </div>
+                <div class="review">
+                    <p>«Граф Орлокский — новый культовый злодей! Его монолог о природе теней гениален.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Театральный критик</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм перегружен символикой. Иногда хочется просто страшной истории без подтекста.»</p>
+                    <p class="review-author"><span class="review-rating">3/5</span> — Блогер</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Фильм 6 -->
+    <div id="modal6" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal6')">&times;</span>
+            <img src="pictures/pic6.2.jpg" alt="Хрустальные сны" class="modal-poster">
+            <h2>Хрустальные сны (2018)</h2>
+            <div class="movie-meta">
+                <span>Научная фантастика, Драма</span>
+                <span class="movie-rating">8.1/10</span>
+                <span>2ч 05м</span>
+            </div>
+            <p class="movie-plot">
+                В будущем, где люди могут записывать и переживать чужие сны, молодой техник обнаруживает серию кристаллизованных снов, содержащих тайну исчезновения его сестры. Путешествие через слои подсознания приводит его к открытию, которое может изменить саму природу человеческой памяти.
+            </p>
+            <div class="reviews">
+                <h3>Отзывы:</h3>
+                <div class="review">
+                    <p>«Визуализация снов — это нечто невероятное! Каждый кристалл — отдельный шедевр.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Кинокритик «Dreamscape»</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм слишком медленный в середине, но финал полностью оправдывает ожидания.»</p>
+                    <p class="review-author"><span class="review-rating">4/5</span> — Блогер «Sci-Fi Today»</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фильм 7 -->
+    <div id="modal7" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal7')">&times;</span>
+            <img src="pictures/pic7.2.jpg" alt="Песок времени" class="modal-poster">
+            <h2>Песок времени (1995)</h2>
+            <div class="movie-meta">
+                <span>Фэнтези, Приключения</span>
+                <span class="movie-rating">7.6/10</span>
+                <span>1ч 58м</span>
+            </div>
+            <p class="movie-plot">
+                Археолог находит древний песочные часы, способные останавливать время на 10 минут. Когда могущественная корпорация узнаёт о его находке, начинается гонка через века и континенты, чтобы защитить артефакт от попадания в не те руки.
+            </p>
+            <div class="reviews">
+                <h3>Отзывы:</h3>
+                <div class="review">
+                    <p>«Сцены с остановкой времени сняты гениально, особенно для 90-х!»</p>
+                    <p class="review-author"><span class="review-rating">4.5/5</span> — Историк кино</p>
+                </div>
+                <div class="review">
+                    <p>«Главный злодей слишком карикатурен, но общая атмосфера захватывает.»</p>
+                    <p class="review-author"><span class="review-rating">3.5/5</span> — Зритель</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фильм 8 -->
+    <div id="modal8" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal8')">&times;</span>
+            <img src="pictures/pic8.2.jpg" alt="Небесный город" class="modal-poster">
+            <h2>Небесный город (2015)</h2>
+            <div class="movie-meta">
+                <span>Киберпанк, Детектив</span>
+                <span class="movie-rating">8.9/10</span>
+                <span>2ч 22м</span>
+            </div>
+            <p class="movie-plot">
+                В мегаполисе, парящем в облаках, детектив расследует серию загадочных самоубийств среди элиты. Его расследование приводит к открытию, что город может быть не тем, чем кажется, а его жители — не совсем людьми.
+            </p>
+            <div class="reviews">
+                <h3>Отзывы:</h3>
+                <div class="review">
+                    <p>«Дизайн города — это новое слово в киберпанке! Каждый небоскрёб дышит будущим.»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Дизайнер футурист</p>
+                </div>
+                <div class="review">
+                    <p>«Фильм поднимает важные вопросы о природе человечества в эпоху ИИ.»</p>
+                    <p class="review-author"><span class="review-rating">4.5/5</span> — Философ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фильм 9 -->
+    <div id="modal9" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal9')">&times;</span>
+            <img src="pictures/pic9.2.jpg" alt="Машина воспоминаний" class="modal-poster">
+            <h2>Машина воспоминаний (2019)</h2>
+            <div class="movie-meta">
+                <span>Драма, Научная фантастика</span>
+                <span class="movie-rating">8.4/10</span>
+                <span>1ч 52м</span>
+            </div>
+            <p class="movie-plot">
+                Изобретатель создаёт устройство, позволяющее переживать воспоминания других людей. Когда он использует машину, чтобы понять свою покойную жену, он обнаруживает шокирующую правду об их отношениях и о самой природе памяти.
+            </p>
+            <div class="reviews">
+                <h3>Отзывы:</h3>
+                <div class="review">
+                    <p>«Самый пронзительный научно-фантастический фильм десятилетия!»</p>
+                    <p class="review-author"><span class="review-rating">5/5</span> — Кинокритик</p>
+                </div>
+                <div class="review">
+                    <p>«Главный герой иногда принимает странные решения, но эмоциональный финал всё искупает.»</p>
+                    <p class="review-author"><span class="review-rating">4/5</span> — Зритель</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фильм 10 -->
+    <div id="modal10" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal10')">&times;</span>
+            <img src="pictures/pic10.2.jpg" alt="Темный феникс" class="modal-poster">
+            <h2>Темный феникс (2025)</h2>
+            <div class="movie-meta">
+                <span>Фэнтези, Экшен</span>
+                <span class="movie-rating">7.8/10</span>
+                <span>2ч 14м</span>
+            </div>
+            <p class="movie-plot">
+                В мире, где магия вернулась в современность, бывший охотник на ведьм обнаруживает, что сам является носителем древней силы Феникса. Чтобы контролировать свою разрушительную мощь, он должен отправиться в забытые земли и столкнуться с создателями магии.
+            </p>
+            <div class="reviews">
+                <h3>Отзывы:</h3>
+                <div class="review">
+                    <p>«Магические битвы — это зрелище, которое нельзя пропустить!»</p>
+                    <p class="review-author"><span class="review-rating">4.5/5</span> — Фанат фэнтези</p>
+                </div>
+                <div class="review">
+                    <p>«Сюжет местами предсказуем, но визуальные эффекты компенсируют всё.»</p>
+                    <p class="review-author"><span class="review-rating">4/5</span> — Киноблогер</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <footer>
+        <p>© 2024 Кинотека фантастических фильмов. Все описания и отзывы вымышлены.</p>
+    </footer>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto'; // Восстанавливаем прокрутку
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>

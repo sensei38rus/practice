@@ -4,146 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Игровой обозреватель - Описания и отзывы о компьютерных играх</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem 0;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .game-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin: 30px 0;
-        }
-        
-        .game-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .game-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .game-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .game-content {
-            padding: 20px;
-        }
-        
-        .game-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-        
-        .game-genre {
-            display: inline-block;
-            background: #e74c3c;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-        }
-        
-        .game-description {
-            margin-bottom: 15px;
-            color: #666;
-        }
-        
-        .game-rating {
-            font-weight: bold;
-            color: #f39c12;
-        }
-        
-        .reviews-section {
-            margin-top: 20px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-        
-        .review {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed #eee;
-        }
-        
-        .review:last-child {
-            border-bottom: none;
-        }
-        
-        .review-author {
-            font-weight: bold;
-            color: #3498db;
-        }
-        
-        .review-date {
-            font-size: 0.8rem;
-            color: #95a5a6;
-        }
-        
-        .review-text {
-            margin-top: 5px;
-        }
-        
-        .review-rating {
-            color: #f39c12;
-            font-weight: bold;
-        }
-        
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-        
-        .search-bar {
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .search-input {
-            padding: 10px 15px;
-            width: 60%;
-            max-width: 500px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            font-size: 1rem;
-        }
-    </style>
+    <link rel = "stylesheet" href = "style.css">
+   
 </head>
 <body>
     <header>
@@ -154,12 +16,10 @@
     </header>
     
     <div class="container">
-        <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Поиск игр...">
-        </div>
+       
         
         <div class="game-list">
-            <!-- Игра 1 -->
+         
             <div class="game-card">
                 <img src="./images/neon.jpg" alt="Neon Abyss" class="game-image">
                 <div class="game-content">
@@ -206,7 +66,7 @@
                 </div>
             </div>
             
-            <!-- Игра 2 -->
+            
             <div class="game-card">
                 <img src="./images/starfall.jpg" alt="Starfall Legends" class="game-image">
                 <div class="game-content">
@@ -254,7 +114,7 @@
                 </div>
             </div>
             
-            <!-- Игра 3 -->
+           
             <div class="game-card">
                 <img src="./images/shadow.jpg" alt="Shadow of the Ancient" class="game-image">
                 <div class="game-content">
@@ -300,14 +160,160 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="game-card">
+                <img src="./images/hacker.jpg" alt="CyberPhantom: Neon Revolution" class="game-image">
+                <div class="game-content">
+                    <h2 class="game-title">CyberPhantom: Neon Revolution</h2>
+                    <span class="game-genre">Киберпанк</span>
+                    <span class="game-genre">Экшен-RPG</span>
+                    <span class="game-genre">Хакерские миссии</span>
+                    <p class="game-description">
+                        Окунитесь в неоновые улицы города будущего, где корпорации правят миром, а киборги-изгои ведут подпольную войну. 
+                        Станьте наёмником-фрилансером, взламывайте системы, модифицируйте своё тело и раскройте заговор, способный уничтожить 
+                        последние островки свободы.
+                    </p>
+                    <div class="game-rating">Рейтинг: 8.9/10</div>
+                    
+                    <div class="reviews-section">
+                        <h3>Отзывы:</h3>
+                        <div class="review">
+                            <div class="review-author">Артём "NeonGhost"</div>
+                            <div class="review-date">22.10.2023</div>
+                            <div class="review-rating">Оценка: 9/10</div>
+                            <p class="review-text">
+                                Сочетание Deus Ex и Cyberpunk 2077, но с уникальной атмосферой. Хакерские мини-игры гениальны, а бои на 
+                                крышах небоскрёбов — это адреналин чистой воды.
+                            </p>
+                        </div>
+                        <div class="review">
+                            <div class="review-author">Алина "CyberViper"</div>
+                            <div class="review-date">14.10.2023</div>
+                            <div class="review-rating">Оценка: 8/10</div>
+                            <p class="review-text">
+                                Глубокий кастомизация персонажа, но сюжет временами предсказуем. Зато графика и саундтрек — просто космос!
+                            </p>
+                        </div>
+
+                        <div class="review">
+
+                            <div class="review-author">Сергей "NullPointer"</div>
+                            <div class="review-date">30.11.2023</div>
+                            <div class="review-rating">Оценка: 7/10</div>
+                            <p class="review-text">
+                                Отличная задумка, но много багов. Иногда миссии ломаются из-за патрулей, которые застревают в текстурах. 
+                                Жду исправлений, потому что потенциал — огромный.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="game-card">
+                <img src="./images/druid.jpg" alt="Eternal Grove: Druid’s Awakening" class="game-image">
+                <div class="game-content">
+                    <h2 class="game-title">Eternal Grove: Druid’s Awakening</h2>
+                    <span class="game-genre">Фэнтези</span>
+                    <span class="game-genre">Сэндбокс</span>
+                    <span class="game-genre">Выживание</span>
+                    <p class="game-description">
+                        Пробудите древнюю магию друидов в мире, где природа мстит цивилизации. Стройте поселения, приручайте мифических существ 
+                        и сражайтесь со злыми духами. Каждое ваше решение меняет экосистему вокруг.
+                    </p>
+                    <div class="game-rating">Рейтинг: 8.7/10</div>
+                    
+                    <div class="reviews-section">
+                        <h3>Отзывы:</h3>
+                        <div class="review">
+                            <div class="review-author">Максим "GreenShaman"</div>
+                            <div class="review-date">05.12.2023</div>
+                            <div class="review-rating">Оценка: 10/10</div>
+                            <p class="review-text">
+                                Valheim встречается с Breath of the Wild! Механика изменения мира под ваши действия поражает. 
+                                А ещё тут можно летать на гигантских орлах — это бесценно.
+                            </p>
+                        </div>
+                        <div class="review">
+                            <div class="review-author">Екатерина "ForestSong"</div>
+                            <div class="review-date">28.11.2023</div>
+                            <div class="review-rating">Оценка: 7/10</div>
+                            <p class="review-text">
+                                Красиво, но сложно. Первые 5 часов чувствуешь себя беспомощным, пока не разберёшься в алхимии. 
+                                Но потом — полное погружение!
+                            </p>
+                        </div>
+
+
+                        <div class="review">
+                            <div class="review-author">Денис "OakShield"</div>
+                            <div class="review-date">10.12.2023</div>
+                            <div class="review-rating">Оценка: 9/10</div>
+                            <p class="review-text">
+                                    Лучший симулятор друида! Особенно нравится, как деревья растут в реальном времени после заклинаний. 
+                                    Не хватает только мультиплеера для совместных ритуалов.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="game-card">
+                <img src="./images/steampunk.jpg" alt="Iron Carnival" class="game-image">
+                <div class="game-content">
+                    <h2 class="game-title">Iron Carnival</h2>
+                    <span class="game-genre">Стимпанк</span>
+                    <span class="game-genre">MOBA</span>
+                    <span class="game-genre">PvP</span>
+                    <p class="game-description">
+                        Участвуйте в безумных боях на механизированных аренах Викторианской эпохи! Управляйте уникальными героями 
+                        с паровыми пушками, турбинами и телескопическими мечами. 5v5, королевские битвы и кооперативные рейды 
+                        против гигантских механических боссов.
+                    </p>
+                    <div class="game-rating">Рейтинг: 9.0/10</div>
+                    
+                    <div class="reviews-section">
+                        <h3>Отзывы:</h3>
+                        <div class="review">
+                            <div class="review-author">Виктор "SteamFist"</div>
+                            <div class="review-date">10.12.2023</div>
+                            <div class="review-rating">Оценка: 9/10</div>
+                            <p class="review-text">
+                                Overwatch в мире стимпанка? Да, пожалуйста! Атмосфера цирка ужасов и безумные ульты — 
+                                например, запуск целого дирижабля в противников.
+                            </p>
+                        </div>
+                        <div class="review">
+                            <div class="review-author">Анна "GearQueen"</div>
+                            <div class="review-date">03.12.2023</div>
+                            <div class="review-rating">Оценка: 8/10</div>
+                            <p class="review-text">
+                                Баланс хромает, но патчи выходят часто. Дизайн персонажей — шедевр, особенно доктор с механическим медведем.
+                            </p>
+                        </div>
+
+                        <div class="review">
+                            <div class="review-author">Павел "IronJester"</div>
+                            <div class="review-date">15.12.2023</div>
+                            <div class="review-rating">Оценка: 10/10</div>
+                            <p class="review-text">
+                                Это не просто MOBA — это театр абсурда! Где ещё можно увидеть, как клоун с реактивным ранцем 
+                                бьёт танк кувалдой? Шутки в чате и безумные комбинации навыков делают каждую игру неповторимой.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
     
-    <footer>
-        <div class="container">
-            <p>© 2023 Игровой обозреватель. Все права защищены.</p>
-            <p>Контактный email: info@game-review.ru</p>
-        </div>
-    </footer>
+   
 </body>
 </html>

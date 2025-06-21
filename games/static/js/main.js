@@ -5,35 +5,47 @@ let currentFilters = {};
 document.addEventListener('DOMContentLoaded', async () => {
     await initFilters();
     await applyFilters();
+    initModal();
 });
 
 // Инициализация фильтров
 async function initFilters() {
-    // Назначаем обработчики для кнопок фильтров
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', async function() {
             const filterType = this.dataset.filter;
             const filterValue = this.dataset.value;
             
-            // Переключаем активное состояние кнопки
             this.classList.toggle('active');
             
-            // Обновляем фильтры
             if (this.classList.contains('active')) {
                 currentFilters[filterType] = filterValue;
             } else {
                 delete currentFilters[filterType];
             }
             
-            // Применяем фильтры
             await applyFilters();
         });
     });
     
-    // Обработчик для кнопки сброса
     document.getElementById('resetFilters').addEventListener('click', async function() {
         resetFilters();
         await applyFilters();
+    });
+}
+
+// Инициализация модального окна
+function initModal() {
+    const modal = document.getElementById('gameModal');
+    const closeBtn = document.querySelector('.close-btn');
+    
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+    
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     });
 }
 
@@ -94,56 +106,88 @@ function renderGames(games) {
     }
     
     gameList.innerHTML = games.map(game => `
-        <div class="game-card">
+    <div class="game-card" data-game-id="${game.id}">
+        <div class="game-image-container">
             <img src="${game.image}" alt="${game.title}" class="game-image">
-            <div class="game-content">
-                <h2 class="game-title">${game.title}</h2>
-                ${game.genres.map(genre => `<span class="game-genre">${genre}</span>`).join('')}
-                <p class="game-description">${game.description}</p>
-                <div class="game-rating">Рейтинг: ${game.rating}/10</div>
-                <div class="game-reviews-count">Отзывов: ${game.reviews.length}</div>
-                
-                <div class="reviews-section">
-                    <h3>Отзывы:</h3>
-                    ${game.reviews.slice(0, 2).map(review => `
-                        <div class="review">
-                            <div class="review-author">${review.author}</div>
-                            <div class="review-date">${review.date}</div>
-                            <div class="review-rating">Оценка: ${review.rating}/10</div>
-                            <p class="review-text">${review.text}</p>
-                        </div>
-                    `).join('')}
-                    ${game.reviews.length > 2 ? 
-                        `<button class="show-more-reviews" data-game-id="${game.id}">
-                            Показать все отзывы (${game.reviews.length - 2} ещё)
-                        </button>` : ''}
-                </div>
-            </div>
         </div>
-    `).join('');
+        <div class="game-content">
+            <h3 class="game-title">${game.title}</h3>
+            <div class="game-genres">
+                ${game.genres.map(genre => `<span class="game-genre">${genre}</span>`).join('')}
+            </div>
+            <button class="show-more-btn">Подробнее</button>
+        </div>
+    </div>
+`).join('');
     
-    // Инициализация кнопок "Показать ещё"
-    initShowMoreButtons();
+    // Инициализация обработчиков кликов по карточкам
+    initGameCardHandlers();
 }
 
-// Инициализация кнопок "Показать ещё отзывы"
-function initShowMoreButtons() {
-    document.querySelectorAll('.show-more-reviews').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const gameId = this.dataset.gameId;
-            const reviewsSection = this.closest('.reviews-section');
-            const hiddenReviews = reviewsSection.querySelectorAll('.review[hidden]');
-            
-            if (hiddenReviews.length > 0) {
-                hiddenReviews.forEach(review => review.hidden = false);
-                this.textContent = 'Скрыть отзывы';
-            } else {
-                const allReviews = reviewsSection.querySelectorAll('.review');
-                allReviews.forEach((review, index) => {
-                    if (index >= 2) review.hidden = true;
-                });
-                this.textContent = `Показать все отзывы (${allReviews.length - 2} ещё)`;
+// Инициализация обработчиков кликов по карточкам
+function initGameCardHandlers() {
+    document.querySelectorAll('.game-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Игнорируем клики по кнопке "Подробнее"
+            if (!e.target.classList.contains('show-more-btn')) {
+                const gameId = this.dataset.gameId;
+                showGameDetails(gameId);
             }
         });
     });
+    
+    document.querySelectorAll('.show-more-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const gameId = this.closest('.game-card').dataset.gameId;
+            showGameDetails(gameId);
+        });
+    });
+}
+
+// Показать детали игры в модальном окне
+async function showGameDetails(gameId) {
+    try {
+        const response = await fetch(`/api/games/${gameId}`);
+        if (!response.ok) {
+            throw new Error('Ошибка загрузки данных игры');
+        }
+        const game = await response.json();
+        
+        const modalContent = document.getElementById('modalContent');
+        modalContent.innerHTML = `
+            <h2 class="modal-game-title">${game.title}</h2>
+            <img src="${game.image}" alt="${game.title}" class="modal-game-image">
+            
+            <div class="modal-game-info">
+                <div class="modal-game-genres">
+                    ${game.genres.map(genre => `<span class="game-genre">${genre}</span>`).join('')}
+                </div>
+                <div class="modal-game-rating">Рейтинг: ${game.rating}/10</div>
+            </div>
+            
+            <p class="modal-game-description">${game.description}</p>
+            
+            <div class="modal-reviews-section">
+                <h3>Отзывы (${game.reviews.length}):</h3>
+                ${game.reviews.map(review => `
+                    <div class="modal-review">
+                        <div class="modal-review-header">
+                            <div>
+                                <span class="modal-review-author">${review.author}</span>
+                                <span class="modal-review-date">${review.date}</span>
+                            </div>
+                            <div class="modal-review-rating">${review.rating}/10</div>
+                        </div>
+                        <p class="modal-review-text">${review.text}</p>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        document.getElementById('gameModal').style.display = 'block';
+    } catch (error) {
+        console.error('Ошибка загрузки деталей игры:', error);
+        alert('Не удалось загрузить информацию об игре');
+    }
 }

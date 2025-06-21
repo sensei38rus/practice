@@ -15,51 +15,53 @@
     </header>
     
     <div class="container">
-
-          <div class="filters">
-        <h2>Фильтры:</h2>
-        
-        <!-- По жанрам -->
-        <div class="filter-group">
-            <h3>Жанры:</h3>
-            <button class="filter-btn" data-filter="genre" data-value="RPG">RPG</button>
-            <button class="filter-btn" data-filter="genre" data-value="Roguelike">Roguelike</button>
-            <button class="filter-btn" data-filter="genre" data-value="Платформер">Платформер</button>
-            <button class="filter-btn" data-filter="genre" data-value="Киберпанк">Киберпанк</button>
-            <button class="filter-btn" data-filter="genre" data-value="Фэнтези">Фэнтези</button>
+        <div class="filters">
+            <h2>Фильтры:</h2>
+            
+            <!-- По жанрам -->
+            <div class="filter-group">
+                <h3>Жанры:</h3>
+                <button class="filter-btn" data-filter="genre" data-value="RPG">RPG</button>
+                <button class="filter-btn" data-filter="genre" data-value="Roguelike">Roguelike</button>
+                <button class="filter-btn" data-filter="genre" data-value="Платформер">Платформер</button>
+                <button class="filter-btn" data-filter="genre" data-value="Киберпанк">Киберпанк</button>
+                <button class="filter-btn" data-filter="genre" data-value="Фэнтези">Фэнтези</button>
+            </div>
+            
+            <!-- По рейтингу -->
+            <div class="filter-group">
+                <h3>Рейтинг:</h3>
+                <button class="filter-btn" data-filter="min_rating" data-value="7">7+</button>
+                <button class="filter-btn" data-filter="min_rating" data-value="8">8+</button>
+                <button class="filter-btn" data-filter="min_rating" data-value="9">9+</button>
+            </div>
+            
+            <!-- По отзывам -->
+            <div class="filter-group">
+                <h3>Отзывы:</h3>
+                <button class="filter-btn" data-filter="min_reviews" data-value="1">1+</button>
+                <button class="filter-btn" data-filter="min_reviews" data-value="2">2+</button>
+                <button class="filter-btn" data-filter="min_reviews" data-value="3">3+</button>
+            </div>
+            
+            <!-- Сброс фильтров -->
+            <button id="resetFilters" class="reset-btn">Сбросить фильтры</button>
         </div>
         
-        <!-- По рейтингу -->
-        <div class="filter-group">
-            <h3>Рейтинг:</h3>
-            <button class="filter-btn" data-filter="min_rating" data-value="7">7+</button>
-            <button class="filter-btn" data-filter="min_rating" data-value="8">8+</button>
-            <button class="filter-btn" data-filter="min_rating" data-value="9">9+</button>
-        </div>
-        
-        <!-- По отзывам -->
-        <div class="filter-group">
-            <h3>Отзывы:</h3>
-            <button class="filter-btn" data-filter="min_reviews" data-value="1">1+</button>
-            <button class="filter-btn" data-filter="min_reviews" data-value="2">2+</button>
-            <button class="filter-btn" data-filter="min_reviews" data-value="3">3+</button>
-        </div>
-        
-        <!-- Сброс фильтров -->
-        <button id="resetFilters" class="reset-btn">Сбросить фильтры</button>
-    </div>
-    
-    <div class="game-list" id="gameList">
-        <!-- Карточки игр будут загружены сюда динамически -->
-        <div class="loading">Загрузка данных...</div>
-    </div>
-
         <div class="game-list" id="gameList">
             <!-- Карточки игр будут загружены сюда динамически -->
             <div class="loading">Загрузка данных...</div>
         </div>
     </div>
 
-  <script src="/static/js/main.js"></script>
+    <!-- Модальное окно -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
 </body>
 </html>

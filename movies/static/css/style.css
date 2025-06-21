@@ -1,216 +1,410 @@
- * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem 0;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .movie-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin: 30px 0;
-        }
-        
-        .movie-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .movie-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .movie-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-        
-        .movie-content {
-            padding: 20px;
-        }
-        
-        .movie-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-        
-        .movie-genre {
-            display: inline-block;
-            background: #e74c3c;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-        }
-        
-        .movie-description {
-            margin-bottom: 15px;
-            color: #666;
-        }
-        
-        .movie-rating {
-            font-weight: bold;
-            color: #f39c12;
-        }
-        
-        .reviews-section {
-            margin-top: 20px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-        
-        .review {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed #eee;
-        }
-        
-        .review:last-child {
-            border-bottom: none;
-        }
-        
-        .review-author {
-            font-weight: bold;
-            color: #3498db;
-        }
-        
-        .review-date {
-            font-size: 0.8rem;
-            color: #95a5a6;
-        }
-        
-        .review-text {
-            margin-top: 5px;
-        }
-        
-        .review-rating {
-            color: #f39c12;
-            font-weight: bold;
-        }
-        
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-        
-        .search-bar {
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .search-input {
-            padding: 10px 15px;
-            width: 60%;
-            max-width: 500px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            font-size: 1rem;
-        }
-        /* Стили для фильтров */
+/* Reset и базовые стили */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    background-color:rgb(228, 197, 219);
+    color: #212529;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Шапка сайта */
+header {
+    background: linear-gradient(135deg, #2c3e50, #4a6491);
+    color: white;
+    padding: 1.8rem 0;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.5rem;
+}
+
+header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* Основной контейнер */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    flex: 1;
+    width: 100%;
+}
+
+/* Стили для фильтров */
 .filters {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    background-color: white;
+    padding: 1.8rem;
+    border-radius: 12px;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+.filters h2 {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    font-size: 1.6rem;
+    font-weight: 600;
 }
 
 .filter-group {
-    margin-bottom: 15px;
+    margin-bottom: 1.5rem;
 }
 
 .filter-group h3 {
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #333;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    color: #495057;
+    font-weight: 500;
 }
 
 .filter-btn {
-    background-color: #4a76a8;
-    color: white;
+    background-color: #e9ecef;
+    color: #495057;
     border: none;
-    padding: 8px 15px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+    padding: 0.5rem 1.2rem;
+    margin-right: 0.6rem;
+    margin-bottom: 0.6rem;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.25s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .filter-btn:hover {
-    background-color: #3a5f8a;
+    background-color: #dee2e6;
+    transform: translateY(-1px);
 }
 
 .filter-btn.active {
-    background-color: #2c4a6e;
-    font-weight: bold;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
 }
 
 .reset-btn {
-    background-color: #e74c3c;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 0.7rem 1.5rem;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.25s ease;
+    font-weight: 600;
+    margin-top: 0.8rem;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
 }
 
 .reset-btn:hover {
-    background-color: #c0392b;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
 }
 
-/* Кнопка "Показать ещё" */
-.show-more-reviews {
-    background: none;
+/* Список игр */
+.movie-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.8rem;
+    margin: 2rem 0 3rem;
+    
+}
+
+/* Карточка игры */
+.movie-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+}
+
+.movie-image-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    
+}
+
+.movie-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.movie-card:hover .movie-image {
+    transform: scale(1.03);
+}
+
+.movie-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    
+}
+
+.movie-title {
+    font-size: 1.25rem;
+    margin: 0 0 12px 0;
+    color: #2c3e50;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.movie-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.movie-genre {
+    display: inline-block;
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.show-more-btn {
+    background: linear-gradient(135deg, #00b894, #55efc4);
+    color: white;
     border: none;
-    color: #4a76a8;
+    padding: 12px 16px;
+    border-radius: 8px;
     cursor: pointer;
-    padding: 5px 0;
-    margin-top: 10px;
-    font-size: 14px;
-    text-decoration: underline;
-}
-
-.show-more-reviews:hover {
-    color: #3a5f8a;
-}
-
-/* Анимация загрузки */
-.loading {
+    font-weight: 600;
     text-align: center;
-    padding: 40px;
-    font-size: 18px;
-    color: #666;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    width: 100%;
+    font-size: 0.95rem;
+}
+
+.show-more-btn:hover {
+    background: linear-gradient(135deg, #00a884, #55efc4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 184, 148, 0.3);
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 3% auto;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    animation: slideIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    color: #adb5bd;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #495057;
+}
+
+/* Контент модального окна */
+.modal-movie-title {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    color: #2c3e50;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.modal-movie-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1.8rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-movie-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.8rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.modal-movie-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.modal-movie-genre {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.modal-movie-rating {
+    font-size: 1.2rem;
+    color: #f39c12;
+    font-weight: 700;
+    background: #fef6e6;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.modal-movie-rating::before {
+    content: "★";
+    margin-right: 0.3rem;
+    font-size: 1.1rem;
+}
+
+.modal-movie-description {
+    margin-bottom: 2.2rem;
+    line-height: 1.7;
+    color: #495057;
+    font-size: 1.05rem;
+}
+
+.modal-reviews-section {
+    margin-top: 2.2rem;
+    border-top: 1px solid #e9ecef;
+    padding-top: 1.8rem;
+}
+
+.modal-reviews-section h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.modal-review {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-review:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.modal-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.modal-review-author {
+    font-weight: 600;
+    color: #3498db;
+    font-size: 1.1rem;
+}
+
+.modal-review-date {
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+.modal-review-rating {
+    color: #f39c12;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.modal-review-text {
+    margin-top: 0.8rem;
+    line-height: 1.6;
+    color: #495057;
+}
+
+/* Состояния загрузки и ошибки */
+.loading, .no-results {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.2rem;
+    color: #6c757d;
+    grid-column: 1 / -1;
 }
 
 .loading:after {
@@ -224,10 +418,98 @@
     60%, 100% { content: '...'; }
 }
 
-/* Сообщение об ошибке */
 .error {
     color: #e74c3c;
     text-align: center;
-    padding: 20px;
-    font-size: 16px;
+    padding: 3rem;
+    font-size: 1.2rem;
+    grid-column: 1 / -1;
+}
+
+/* Подвал */
+footer {
+    background: linear-gradient(135deg, #2c3e50, #4a6491);
+    color: white;
+    text-align: center;
+    padding: 1.8rem 0;
+    margin-top: 3rem;
+}
+
+footer p {
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .movie-list {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .modal-content {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .movie-list {
+        gap: 1.5rem;
+    }
+    
+    .movie-image-container {
+        height: 160px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 2% auto;
+        padding: 1.8rem;
+    }
+    
+    .modal-movie-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    header {
+        padding: 1.5rem 0;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .container {
+        padding: 0 1.2rem;
+    }
+    
+    .movie-list {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .movie-image-container {
+        height: 200px;
+    }
+    
+    .filters {
+        padding: 1.5rem;
+    }
+    
+    .modal-content {
+        padding: 1.5rem;
+    }
+    
+    .modal-movie-title {
+        font-size: 1.6rem;
+    }
+    
+    .modal-movie-image {
+        max-height: 300px;
+    }
 }

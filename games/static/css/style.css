@@ -1,65 +1,40 @@
-/* Общие стили */
+/* Reset и базовые стили */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
-
-:root {
-    --primary: #4361ee;
-    --primary-dark: #3a56d4;
-    --secondary: #3f37c9;
-    --accent: #4895ef;
-    --dark: #1b263b;
-    --light: #f8f9fa;
-    --success: #4cc9f0;
-    --danger: #f72585;
-    --warning: #f8961e;
-    --gray: #adb5bd;
-    --gray-light: #e9ecef;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
 }
 
 body {
-    background-color: var(--light);
-    color: var(--dark);
+    background-color:rgb(228, 197, 219);
+    color: #212529;
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* Шапка */
+/* Шапка сайта */
 header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, #2c3e50, #4a6491);
     color: white;
-    padding: 1.5rem 0;
+    padding: 1.8rem 0;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-header::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
-    opacity: 0.1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.5rem;
 }
 
 header .container {
-    position: relative;
-    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 header h1 {
     font-size: 2.5rem;
-    font-weight: 800;
     margin-bottom: 0.5rem;
+    font-weight: 700;
     letter-spacing: -0.5px;
 }
 
@@ -69,32 +44,29 @@ header p {
     font-weight: 300;
 }
 
+/* Основной контейнер */
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 1.5rem;
+    flex: 1;
     width: 100%;
 }
 
-/* Основной контент */
-main {
-    flex: 1;
-    padding: 2rem 0;
-}
-
-/* Фильтры */
+/* Стили для фильтров */
 .filters {
     background-color: white;
-    padding: 1.5rem;
+    padding: 1.8rem;
     border-radius: 12px;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2.5rem;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
 }
 
 .filters h2 {
-    font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: var(--dark);
+    color: #2c3e50;
+    font-size: 1.6rem;
     font-weight: 600;
 }
 
@@ -103,74 +75,71 @@ main {
 }
 
 .filter-group h3 {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.8rem;
     font-size: 1rem;
-    color: var(--dark);
+    color: #495057;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .filter-btn {
-    background-color: var(--gray-light);
-    color: var(--dark);
+    background-color: #e9ecef;
+    color: #495057;
     border: none;
-    padding: 0.5rem 1rem;
-    margin-right: 0.75rem;
-    margin-bottom: 0.75rem;
+    padding: 0.5rem 1.2rem;
+    margin-right: 0.6rem;
+    margin-bottom: 0.6rem;
     border-radius: 20px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     font-size: 0.9rem;
     font-weight: 500;
 }
 
 .filter-btn:hover {
-    background-color: var(--primary);
-    color: white;
-    transform: translateY(-2px);
+    background-color: #dee2e6;
+    transform: translateY(-1px);
 }
 
 .filter-btn.active {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, #3498db, #2c3e50);
     color: white;
-    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.2);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
 }
 
 .reset-btn {
-    background-color: var(--danger);
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
     color: white;
     border: none;
-    padding: 0.75rem 1.5rem;
+    padding: 0.7rem 1.5rem;
     border-radius: 20px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-weight: 500;
-    margin-top: 1rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+    transition: all 0.25s ease;
+    font-weight: 600;
+    margin-top: 0.8rem;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
 }
 
 .reset-btn:hover {
-    background-color: #d61a6b;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(247, 37, 133, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
 }
 
 /* Список игр */
 .game-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-    margin: 2rem 0;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.8rem;
+    margin: 2rem 0 3rem;
+    
 }
 
+/* Карточка игры */
 .game-card {
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -178,14 +147,15 @@ main {
 }
 
 .game-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
 }
 
 .game-image-container {
-    position: relative;
+    width: 100%;
+    height: 180px;
     overflow: hidden;
-    height: 200px;
+    
 }
 
 .game-image {
@@ -196,171 +166,244 @@ main {
 }
 
 .game-card:hover .game-image {
-    transform: scale(1.05);
-}
-
-.game-rating-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.game-rating-badge::before {
-    content: "★";
-    color: var(--warning);
+    transform: scale(1.03);
 }
 
 .game-content {
-    padding: 1.5rem;
-    flex: 1;
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    
 }
 
 .game-title {
     font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    color: var(--dark);
-    font-weight: 700;
+    margin: 0 0 12px 0;
+    color: #2c3e50;
+    font-weight: 600;
     line-height: 1.3;
 }
 
 .game-genres {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
 .game-genre {
-    background: var(--primary);
+    display: inline-block;
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
     color: white;
-    padding: 0.25rem 0.75rem;
+    padding: 5px 12px;
     border-radius: 20px;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 500;
 }
 
-.game-description {
-    margin-bottom: 1.5rem;
-    color: var(--gray);
+.show-more-btn {
+    background: linear-gradient(135deg, #00b894, #55efc4);
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    width: 100%;
     font-size: 0.95rem;
-    line-height: 1.5;
-    flex: 1;
 }
 
-.game-meta {
+.show-more-btn:hover {
+    background: linear-gradient(135deg, #00a884, #55efc4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 184, 148, 0.3);
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 3% auto;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    animation: slideIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    color: #adb5bd;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #495057;
+}
+
+/* Контент модального окна */
+.modal-game-title {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    color: #2c3e50;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.modal-game-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1.8rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-game-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: auto;
-    font-size: 0.9rem;
-    color: var(--gray);
+    margin-bottom: 1.8rem;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-.reviews-section {
-    margin-top: 1.5rem;
-    border-top: 1px solid var(--gray-light);
-    padding-top: 1.5rem;
+.modal-game-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
 }
 
-.reviews-section h4 {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    color: var(--dark);
+.modal-game-genre {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.modal-game-rating {
+    font-size: 1.2rem;
+    color: #f39c12;
+    font-weight: 700;
+    background: #fef6e6;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.modal-game-rating::before {
+    content: "★";
+    margin-right: 0.3rem;
+    font-size: 1.1rem;
+}
+
+.modal-game-description {
+    margin-bottom: 2.2rem;
+    line-height: 1.7;
+    color: #495057;
+    font-size: 1.05rem;
+}
+
+.modal-reviews-section {
+    margin-top: 2.2rem;
+    border-top: 1px solid #e9ecef;
+    padding-top: 1.8rem;
+}
+
+.modal-reviews-section h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
     font-weight: 600;
 }
 
-.review {
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px dashed var(--gray-light);
+.modal-review {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
 }
 
-.review:last-child {
+.modal-review:last-child {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
 }
 
-.review-header {
+.modal-review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+    gap: 0.8rem;
 }
 
-.review-author {
+.modal-review-author {
     font-weight: 600;
-    color: var(--primary);
-    font-size: 0.9rem;
+    color: #3498db;
+    font-size: 1.1rem;
 }
 
-.review-date {
-    font-size: 0.8rem;
-    color: var(--gray);
+.modal-review-date {
+    color: #6c757d;
+    font-size: 0.85rem;
 }
 
-.review-rating {
-    color: var(--warning);
-    font-weight: 600;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
+.modal-review-rating {
+    color: #f39c12;
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
-.review-rating::before {
-    content: "★";
+.modal-review-text {
+    margin-top: 0.8rem;
+    line-height: 1.6;
+    color: #495057;
 }
 
-.review-text {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--dark);
-}
-
-/* Кнопка "Показать ещё" */
-.show-more-reviews {
-    background: none;
-    border: none;
-    color: var(--primary);
-    cursor: pointer;
-    padding: 0.5rem 0;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    transition: color 0.2s ease;
-}
-
-.show-more-reviews:hover {
-    color: var(--primary-dark);
-    text-decoration: underline;
-}
-
-.show-more-reviews::after {
-    content: "↓";
-    font-size: 0.8rem;
-}
-
-/* Анимация загрузки */
-.loading {
+/* Состояния загрузки и ошибки */
+.loading, .no-results {
     text-align: center;
     padding: 3rem;
-    font-size: 1.1rem;
-    color: var(--gray);
+    font-size: 1.2rem;
+    color: #6c757d;
     grid-column: 1 / -1;
 }
 
@@ -375,53 +418,98 @@ main {
     60%, 100% { content: '...'; }
 }
 
-/* Сообщение об ошибке */
 .error {
-    color: var(--danger);
+    color: #e74c3c;
     text-align: center;
-    padding: 2rem;
-    font-size: 1rem;
+    padding: 3rem;
+    font-size: 1.2rem;
     grid-column: 1 / -1;
 }
 
 /* Подвал */
 footer {
-    background: var(--dark);
+    background: linear-gradient(135deg, #2c3e50, #4a6491);
     color: white;
     text-align: center;
-    padding: 2rem 0;
+    padding: 1.8rem 0;
     margin-top: 3rem;
 }
 
 footer p {
     opacity: 0.8;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
 /* Адаптивность */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .game-list {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .modal-content {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .game-list {
+        gap: 1.5rem;
+    }
+    
+    .game-image-container {
+        height: 160px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 2% auto;
+        padding: 1.8rem;
+    }
+    
+    .modal-game-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    header {
+        padding: 1.5rem 0;
     }
     
     header h1 {
         font-size: 2rem;
     }
     
-    .filters {
-        padding: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .game-list {
-        grid-template-columns: 1fr;
+    .container {
+        padding: 0 1.2rem;
     }
     
-    .filter-btn {
-        margin-right: 0.5rem;
-        margin-bottom: 0.5rem;
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
+    .game-list {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .game-image-container {
+        height: 200px;
+    }
+    
+    .filters {
+        padding: 1.5rem;
+    }
+    
+    .modal-content {
+        padding: 1.5rem;
+    }
+    
+    .modal-game-title {
+        font-size: 1.6rem;
+    }
+    
+    .modal-game-image {
+        max-height: 300px;
     }
 }

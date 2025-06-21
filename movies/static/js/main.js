@@ -5,35 +5,47 @@ let currentFilters = {};
 document.addEventListener('DOMContentLoaded', async () => {
     await initFilters();
     await applyFilters();
+    initModal();
 });
 
 // Инициализация фильтров
 async function initFilters() {
-    // Назначаем обработчики для кнопок фильтров
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', async function() {
             const filterType = this.dataset.filter;
             const filterValue = this.dataset.value;
             
-            // Переключаем активное состояние кнопки
             this.classList.toggle('active');
             
-            // Обновляем фильтры
             if (this.classList.contains('active')) {
                 currentFilters[filterType] = filterValue;
             } else {
                 delete currentFilters[filterType];
             }
             
-            // Применяем фильтры
             await applyFilters();
         });
     });
     
-    // Обработчик для кнопки сброса
     document.getElementById('resetFilters').addEventListener('click', async function() {
         resetFilters();
         await applyFilters();
+    });
+}
+
+// Инициализация модального окна
+function initModal() {
+    const modal = document.getElementById('movieModal');
+    const closeBtn = document.querySelector('.close-btn');
+    
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+    
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     });
 }
 
@@ -94,56 +106,88 @@ function renderMovies(movies) {
     }
     
     movieList.innerHTML = movies.map(movie => `
-        <div class="movie-card">
+    <div class="movie-card" data-movie-id="${movie.id}">
+        <div class="movie-image-container">
             <img src="${movie.image}" alt="${movie.title}" class="movie-image">
-            <div class="movie-content">
-                <h2 class="movie-title">${movie.title}</h2>
-                ${movie.genres.map(genre => `<span class="movie-genre">${genre}</span>`).join('')}
-                <p class="movie-description">${movie.description}</p>
-                <div class="movie-rating">Рейтинг: ${movie.rating}/10</div>
-                <div class="movie-reviews-count">Отзывов: ${movie.reviews.length}</div>
-                
-                <div class="reviews-section">
-                    <h3>Отзывы:</h3>
-                    ${movie.reviews.map((review, index) => `
-                        <div class="review" ${index >= 2 ? 'hidden' : ''}>
-                            <div class="review-author">${review.author}</div>
-                            <div class="review-date">${review.date}</div>
-                            <div class="review-rating">Оценка: ${review.rating}/10</div>
-                            <p class="review-text">${review.text}</p>
-                        </div>
-                    `).join('')}
-                    ${movie.reviews.length > 2 ? 
-                        `<button class="show-more-reviews" data-movie-id="${movie.id}">
-                            Показать все отзывы (${movie.reviews.length - 2} ещё)
-                        </button>` : ''}
-                </div>
-            </div>
         </div>
-    `).join('');
+        <div class="movie-content">
+            <h3 class="movie-title">${movie.title}</h3>
+            <div class="movie-genres">
+                ${movie.genres.map(genre => `<span class="movie-genre">${genre}</span>`).join('')}
+            </div>
+            <button class="show-more-btn">Подробнее</button>
+        </div>
+    </div>
+`).join('');
     
-    // Инициализация кнопок "Показать ещё"
-    initShowMoreButtons();
+    // Инициализация обработчиков кликов по карточкам
+    initMovieCardHandlers();
 }
 
-// Инициализация кнопок "Показать ещё отзывы"
-function initShowMoreButtons() {
-    document.querySelectorAll('.show-more-reviews').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const movieId = this.dataset.movieId;
-            const reviewsSection = this.closest('.reviews-section');
-            const hiddenReviews = reviewsSection.querySelectorAll('.review[hidden]');
-            
-            if (hiddenReviews.length > 0) {
-                hiddenReviews.forEach(review => review.hidden = false);
-                this.textContent = 'Скрыть отзывы';
-            } else {
-                const allReviews = reviewsSection.querySelectorAll('.review');
-                allReviews.forEach((review, index) => {
-                    if (index >= 2) review.hidden = true;
-                });
-                this.textContent = `Показать все отзывы (${allReviews.length - 2} ещё)`;
+// Инициализация обработчиков кликов по карточкам
+function initMovieCardHandlers() {
+    document.querySelectorAll('.movie-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Игнорируем клики по кнопке "Подробнее"
+            if (!e.target.classList.contains('show-more-btn')) {
+                const movieId = this.dataset.movieId;
+                showmovieDetails(movieId);
             }
         });
     });
+    
+    document.querySelectorAll('.show-more-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const movieId = this.closest('.movie-card').dataset.movieId;
+            showMovieDetails(movieId);
+        });
+    });
+}
+
+// Показать детали игры в модальном окне
+async function showMovieDetails(movieId) {
+    try {
+        const response = await fetch(`/api/movies/${movieId}`);
+        if (!response.ok) {
+            throw new Error('Ошибка загрузки данных игры');
+        }
+        const movie = await response.json();
+        
+        const modalContent = document.getElementById('modalContent');
+        modalContent.innerHTML = `
+            <h2 class="modal-movie-title">${movie.title}</h2>
+            <img src="${movie.image}" alt="${movie.title}" class="modal-movie-image">
+            
+            <div class="modal-movie-info">
+                <div class="modal-movie-genres">
+                    ${movie.genres.map(genre => `<span class="movie-genre">${genre}</span>`).join('')}
+                </div>
+                <div class="modal-movie-rating">Рейтинг: ${movie.rating}/10</div>
+            </div>
+            
+            <p class="modal-movie-description">${movie.description}</p>
+            
+            <div class="modal-reviews-section">
+                <h3>Отзывы (${movie.reviews.length}):</h3>
+                ${movie.reviews.map(review => `
+                    <div class="modal-review">
+                        <div class="modal-review-header">
+                            <div>
+                                <span class="modal-review-author">${review.author}</span>
+                                <span class="modal-review-date">${review.date}</span>
+                            </div>
+                            <div class="modal-review-rating">${review.rating}/10</div>
+                        </div>
+                        <p class="modal-review-text">${review.text}</p>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        document.getElementById('movieModal').style.display = 'block';
+    } catch (error) {
+        console.error('Ошибка загрузки деталей игры:', error);
+        alert('Не удалось загрузить информацию об игре');
+    }
 }

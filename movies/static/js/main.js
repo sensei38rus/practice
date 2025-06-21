@@ -105,12 +105,12 @@ function renderMovies(movies) {
                 
                 <div class="reviews-section">
                     <h3>Отзывы:</h3>
-                    ${movie.reviews.slice(0, 2).map(review => `
-                        <div class="review">
+                    ${movie.reviews.map((review, index) => `
+                        <div class="review" ${index >= 2 ? 'hidden' : ''}>
                             <div class="review-author">${review.author}</div>
                             <div class="review-date">${review.date}</div>
                             <div class="review-rating">Оценка: ${review.rating}/10</div>
-                            <p class="review-text">${review.text}movie
+                            <p class="review-text">${review.text}</p>
                         </div>
                     `).join('')}
                     ${movie.reviews.length > 2 ? 

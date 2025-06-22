@@ -92,5 +92,78 @@ def get_game(game_id):
 def serve_static(path):
     return send_from_directory('static', path)
 
+
+
+@app.route('/api/games/<int:game_id>/reviews', methods=['POST'])
+def add_review(game_id):
+    games = load_games_data()
+    game = next((g for g in games if g['id'] == game_id), None)
+    
+    if not game:
+        return jsonify({'error': 'Game not found'}), 404
+    
+    new_review = request.get_json()
+    
+    # Валидация данных
+    required_fields = ['author', 'text', 'rating']
+    if not all(field in new_review for field in required_fields):
+        return jsonify({'error': 'Missing required fields'}), 400
+    
+    try:
+        new_review['rating'] = float(new_review['rating'])
+        if not (0 <= new_review['rating'] <= 10):
+            raise ValueError
+    except (ValueError, TypeError):
+        return jsonify({'error': 'Rating must be a number between 0 and 10'}), 400
+    
+    # Добавляем дату
+    from datetime import datetime
+    new_review['date'] = datetime.now().strftime("%d.%m.%Y")
+    
+    game['reviews'].append(new_review)
+    
+    # Пересчитываем рейтинг игры
+    total_rating = sum(review['rating'] for review in game['reviews'])
+    game['rating'] = round(total_rating / len(game['reviews']), 1)
+    
+    # Сохраняем обновленные данные
+    games_path = os.path.join(BASE_DIR, 'data', 'games.json')
+    with open(games_path, 'w', encoding='utf-8') as f:
+        json.dump(games, f, ensure_ascii=False, indent=2)
+    
+    return jsonify(new_review), 201
+
+
+
+# Добавить этот endpoint перед if __name__ == '__main__':
+@app.route('/api/games/<int:game_id>/reviews/<int:review_index>', methods=['DELETE'])
+def delete_review(game_id, review_index):
+    games = load_games_data()
+    game = next((g for g in games if g['id'] == game_id), None)
+    
+    if not game:
+        return jsonify({'error': 'Game not found'}), 404
+    
+    try:
+        # Удаляем отзыв по индексу
+        deleted_review = game['reviews'].pop(review_index)
+        
+        # Пересчитываем рейтинг игры, если остались отзывы
+        if game['reviews']:
+            total_rating = sum(review['rating'] for review in game['reviews'])
+            game['rating'] = round(total_rating / len(game['reviews']), 1)
+        else:
+            game['rating'] = 0.0
+        
+        # Сохраняем обновленные данные
+        games_path = os.path.join(BASE_DIR, 'data', 'games.json')
+        with open(games_path, 'w', encoding='utf-8') as f:
+            json.dump(games, f, ensure_ascii=False, indent=2)
+        
+        return jsonify({'message': 'Review deleted successfully', 'review': deleted_review}), 200
+    except IndexError:
+        return jsonify({'error': 'Review not found'}), 404
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

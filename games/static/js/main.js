@@ -145,7 +145,48 @@ function initGameCardHandlers() {
     });
 }
 
-// Показать детали игры в модальном окне
+
+function initReviewForm() {
+    const form = document.getElementById('reviewForm');
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const gameId = this.dataset.gameId;
+            const author = this.elements['author'].value;
+            const text = this.elements['text'].value;
+            const rating = this.elements['rating'].value;
+            
+            try {
+                const response = await fetch(`/api/games/${gameId}/reviews`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        author: author,
+                        text: text,
+                        rating: rating
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка при добавлении отзыва');
+                }
+                
+                const newReview = await response.json();
+                showGameDetails(gameId); // Обновляем модальное окно с новым отзывом
+                this.reset(); // Очищаем форму
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Не удалось добавить отзыв: ' + error.message);
+            }
+        });
+    }
+}
+
+// Обновим функцию showGameDetails для добавления кнопок удаления
 async function showGameDetails(gameId) {
     try {
         const response = await fetch(`/api/games/${gameId}`);
@@ -170,24 +211,78 @@ async function showGameDetails(gameId) {
             
             <div class="modal-reviews-section">
                 <h3>Отзывы (${game.reviews.length}):</h3>
-                ${game.reviews.map(review => `
-                    <div class="modal-review">
+                ${game.reviews.map((review, index) => `
+                    <div class="modal-review" data-review-index="${index}">
                         <div class="modal-review-header">
                             <div>
                                 <span class="modal-review-author">${review.author}</span>
                                 <span class="modal-review-date">${review.date}</span>
                             </div>
-                            <div class="modal-review-rating">${review.rating}/10</div>
+                            <div class="modal-review-rating">
+                                ${review.rating}/10
+                                <button class="delete-review-btn" data-game-id="${gameId}" data-review-index="${index}">×</button>
+                            </div>
                         </div>
                         <p class="modal-review-text">${review.text}</p>
                     </div>
                 `).join('')}
             </div>
+            
+            <div class="add-review-form">
+                <h3>Добавить отзыв</h3>
+                <form id="reviewForm" data-game-id="${gameId}">
+                    <div class="form-group">
+                        <label for="author">Ваше имя:</label>
+                        <input type="text" id="author" name="author" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Оценка (0-10):</label>
+                        <input type="number" id="rating" name="rating" min="0" max="10" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Текст отзыва:</label>
+                        <textarea id="text" name="text" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-review-btn">Отправить отзыв</button>
+                </form>
+            </div>
         `;
         
+        initReviewForm();
+        initDeleteReviewButtons(); // Инициализируем кнопки удаления
         document.getElementById('gameModal').style.display = 'block';
     } catch (error) {
         console.error('Ошибка загрузки деталей игры:', error);
         alert('Не удалось загрузить информацию об игре');
     }
+}
+
+// Добавим функцию для инициализации кнопок удаления
+function initDeleteReviewButtons() {
+    document.querySelectorAll('.delete-review-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+            e.stopPropagation();
+            const gameId = this.dataset.gameId;
+            const reviewIndex = this.dataset.reviewIndex;
+            
+            if (confirm('Вы уверены, что хотите удалить этот отзыв?')) {
+                try {
+                    const response = await fetch(`/api/games/${gameId}/reviews/${reviewIndex}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Ошибка при удалении отзыва');
+                    }
+                    
+                    const result = await response.json();
+                    console.log(result.message);
+                    showGameDetails(gameId); // Обновляем модальное окно
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    alert('Не удалось удалить отзыв: ' + error.message);
+                }
+            }
+        });
+    });
 }

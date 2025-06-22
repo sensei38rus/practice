@@ -112,6 +112,7 @@ function renderGames(games) {
         </div>
         <div class="game-content">
             <h3 class="game-title">${game.title}</h3>
+             ${game.creator ? `<div class="game-creator">Создатель: ${game.creator}</div>` : ''}
             <div class="game-genres">
                 ${game.genres.map(genre => `<span class="game-genre">${genre}</span>`).join('')}
             </div>
@@ -201,6 +202,7 @@ async function showGameDetails(gameId) {
             <img src="${game.image}" alt="${game.title}" class="modal-game-image">
             
             <div class="modal-game-info">
+             ${game.creator ? `<div class="modal-game-creator">Создатель: ${game.creator}</div>` : ''}
                 <div class="modal-game-genres">
                     ${game.genres.map(genre => `<span class="game-genre">${genre}</span>`).join('')}
                 </div>

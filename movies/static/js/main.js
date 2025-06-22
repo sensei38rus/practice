@@ -112,6 +112,7 @@ function renderMovies(movies) {
         </div>
         <div class="movie-content">
             <h3 class="movie-title">${movie.title}</h3>
+             ${movie.creator ? `<div class="movie-creator">Создатель: ${movie.creator}</div>` : ''}
             <div class="movie-genres">
                 ${movie.genres.map(genre => `<span class="movie-genre">${genre}</span>`).join('')}
             </div>
@@ -203,6 +204,7 @@ async function showMovieDetails(movieId) {
             <img src="${movie.image}" alt="${movie.title}" class="modal-movie-image">
             
             <div class="modal-movie-info">
+            ${movie.creator ? `<div class="modal-movie-creator">Создатель: ${movie.creator}</div>` : ''}
                 <div class="modal-movie-genres">
                     ${movie.genres.map(genre => `<span class="movie-genre">${genre}</span>`).join('')}
                 </div>

@@ -128,7 +128,7 @@
   {
     "id": 11,
     "title": "Последний алгоритм",
-    "image": "images/last_algorithm.jpg",
+    "image": "/static/images/last_algorithm.jpg",
     "genres": ["Научная фантастика", "Киберпанк"],
     "description": "2045 год. Гениальный программист создает ИИ, способный переписать реальность. Но кто на самом деле управляет кодом?",
     "rating": 9.0,
@@ -163,7 +163,7 @@
   {
     "id": 12,
     "title": "Сад шепчущих статуй",
-    "image": "images/whispering_garden.jpg",
+    "image": "/static/images/whispering_garden.jpg",
     "genres": ["Мистика", "Готический роман"],
     "description": "Старинное поместье с живыми статуями хранит тайну исчезновения семьи Вандербильтов в 1892 году.",
     "rating": 8.7,
@@ -204,7 +204,7 @@
   {
     "id": 13,
     "title": "Квантовая поэзия",
-    "image": "images/quantum_poetry.jpg",
+    "image": "/static/images/quantum_poetry.jpg",
     "genres": ["Философская проза", "Научпоп"],
     "description": "Эксперимент, где физики доказывают, что стихи могут влиять на квантовые состояния материи.",
     "rating": 8.9,
@@ -239,7 +239,7 @@
   {
     "id": 14,
     "title": "Повар-убийца",
-    "image": "images/killer_chef.jpg",
+    "image": "/static/images/killer_chef.jpg",
     "genres": ["Кулинарный детектив", "Триллер"],
     "description": "Шеф-повар элитного ресторана раскрывает преступления через анализ... пищевых отравлений.",
     "rating": 8.2,
@@ -274,7 +274,7 @@
   {
     "id": 15,
     "title": "Дневник межзвездного ботаника",
-    "image": "images/space_botanist.jpg",
+    "image": "/static/images/space_botanist.jpg",
     "genres": ["Космическая опера", "Биопанк"],
     "description": "История ученого, который выращивает леса на Марсе, пока корпорации охотятся за его секретом фотосинтеза 2.0.",
     "rating": 9.1,

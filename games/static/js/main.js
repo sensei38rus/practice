@@ -239,7 +239,7 @@ async function showGameDetails(gameId) {
                     </div>
                     <div class="form-group">
                         <label for="rating">Оценка (0-10):</label>
-                        <input type="number" id="rating" name="rating" min="0" max="10" step="0.1" required>
+                        <input type="number" id="rating" name="rating" min="0" max="10" step="1" required>
                     </div>
                     <div class="form-group">
                         <label for="text">Текст отзыва:</label>
@@ -259,7 +259,7 @@ async function showGameDetails(gameId) {
     }
 }
 
-// Добавим функцию для инициализации кнопок удаления
+
 function initDeleteReviewButtons() {
     document.querySelectorAll('.delete-review-btn').forEach(btn => {
         btn.addEventListener('click', async function(e) {

@@ -135,7 +135,6 @@ def add_review(game_id):
 
 
 
-# Добавить этот endpoint перед if __name__ == '__main__':
 @app.route('/api/games/<int:game_id>/reviews/<int:review_index>', methods=['DELETE'])
 def delete_review(game_id, review_index):
     games = load_games_data()
